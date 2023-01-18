@@ -1,8 +1,0 @@
-name : sample files
-
-jobs:
-  example_jobs:
-    steps:
-      - name: run script file
-        run: ./github/scripts/scripts.sh
-        shell: bash
