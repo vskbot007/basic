@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+permissions: write-all
+
 jobs:
   install-docker:
     runs-on: ubuntu-latest
