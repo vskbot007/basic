@@ -43,7 +43,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t python:latest .
+        docker build -t vskbot007/python:latest
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
         docker push vskbot007/python:latest
 
