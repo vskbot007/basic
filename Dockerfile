@@ -1,6 +1,9 @@
-FROM python:3.8-alpine
-RUN mkdir /app
-ADD . /app
-WORKDIR /app
-RUN pip install pipreqs
-CMD ["python", "app.py"]
+FROM        centos:7
+RUN         yum -y install wget \
+            && yum -y install unzip \
+            && yum install -y nc \
+            && yum -y install httpd && \
+            && yum clean all
+EXPOSE      6379
+ENTRYPOINT  ["ping"]
+CMD  ["google.com"]
