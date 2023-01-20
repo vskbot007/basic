@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
-
-permissions: write-all
+      
+env:
+  IMAGE_NAME: vskbot007/sample
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
   install-docker:
     runs-on: ubuntu-latest
 
@@ -23,6 +27,12 @@ jobs:
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
         sudo apt-get update
         sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+        
+  push:
+    needs: test
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'      
         
   build:
     runs-on: ubuntu-latest
@@ -43,8 +53,10 @@ jobs:
 
     - name: Build and push latest
       uses: docker/build-push-action@v2
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-            docker push vskbot007/sample:latest
       with:
           context: .
           file: ./Dockerfile
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
