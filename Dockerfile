@@ -1,9 +1,13 @@
-FROM        centos:7
-RUN         yum -y install wget \
-            && yum -y install unzip \
-            && yum install -y nc \
-            && yum -y install httpd && \
-            && yum clean all
-EXPOSE      6379
-ENTRYPOINT  ["ping"]
-CMD  ["google.com"]
+FROM alpine
+
+LABEL maintainer saikumar <saikumarvutukuru123@gmail.com>
+
+RUN apk --update add git less openssh && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm /var/cache/apk/*
+
+VOLUME /git
+WORKDIR /git
+
+ENTRYPOINT ["git"]
+CMD ["--help"]
