@@ -12,13 +12,10 @@ WORKDIR /git
 ENTRYPOINT ["git"]
 CMD ["--help"]
 
-FROM alpine
-
+#nodejs
+FROM node:12.18.1
 LABEL maintainer saikumar <saikumarvutukuru123@gmail.com>
-
-RUN apk --update add git less openssh && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm /var/cache/apk/*
+ENV NODE_ENV=production
 
 VOLUME /git
 WORKDIR /git
