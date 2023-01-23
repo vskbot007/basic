@@ -13,12 +13,9 @@ ENTRYPOINT ["git"]
 CMD ["--help"]
 
 #nodejs
-FROM node:18.13.0
-LABEL maintainer saikumar <saikumarvutukuru123@gmail.com>
-ENV NODE_ENV=production
-
-VOLUME /git
-WORKDIR /git
-
-ENTRYPOINT ["git"]
-CMD ["--help"]
+RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+ && git clone https://github.com/nodejs/node.git \
+ && cd node \
+ && ./configure \
+ && make \
+ && sudo make install
