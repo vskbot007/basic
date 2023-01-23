@@ -13,7 +13,7 @@ ENTRYPOINT ["git"]
 CMD ["--help"]
 
 #nodejs
-FROM node:12.18.1
+FROM node:18.13.0
 LABEL maintainer saikumar <saikumarvutukuru123@gmail.com>
 ENV NODE_ENV=production
 
