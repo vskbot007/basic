@@ -1,23 +1,13 @@
-ARG ALPINE_VERSION=3.17
+FROM alpine
 
-FROM alpine:${ALPINE_VERSION}
+LABEL maintainer saikumar <saikumarvutukuru123@gmail.com>
 
-MAINTAINER Sai Kumar
+RUN apk --update add git less openssh && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm /var/cache/apk/*
 
-ARG TZ=Asia/Kolkata
+VOLUME /git
+WORKDIR /git
 
-RUN mkdir -p /goodenough /etc/periodic/1min /source /destination
-
-RUN set -ex
-RUN apk update
-RUN apk add --no-cache --no-progress tzdata
-
-RUN cp /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
-
-COPY crontab /etc/crontabs/root
-COPY entrypoint.sh /entrypoint.sh
-COPY read.sh /read.sh
-
-RUN chmod 755 /entrypoint.sh
-
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT ["git"]
+CMD ["--help"]
